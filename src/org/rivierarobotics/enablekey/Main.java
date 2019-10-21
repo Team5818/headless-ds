@@ -19,7 +19,7 @@ public class Main {
 		InetAddress addr = InetAddress.getByName("10.58.18.2");
 		
 		GpioController gpio = GpioFactory.getInstance();
-		GpioPinDigitalInput toggleOn = gpio.provisionDigitalInputPin(RaspiPin.GPIO_02, PinPullResistance.PULL_DOWN);
+		GpioPinDigitalInput toggleOn = gpio.provisionDigitalInputPin(RaspiPin.GPIO_05, PinPullResistance.PULL_DOWN);
 		
 		String strData = "00 00 01 04 10 03";
 		String strSplit[] = strData.split(" ");
