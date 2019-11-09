@@ -1,0 +1,13 @@
+[Unit]
+Description=FRC Enable Key Program
+After=network.target
+
+[Service]
+Type=simple
+User=pi
+Group=pi
+ExecStart=/usr/bin/python3 /home/pi/enable_key.py
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
