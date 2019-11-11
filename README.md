@@ -32,3 +32,9 @@ Enables FRC robots on ethernet connection
 * Restart the Pi: `sudo systemctl reboot -i`
 * Reload systemctl configuration: `sudo systemctl daemon-reload`
 * Start/Stop/Restart/View logs (service): `sudo systemctl <start|stop|restart|status> enable-key.service`
+
+## Making Copies
+1. Insert the working SD card to a linux computer
+2. Run `sudo dd bs=4M if=<deviceName> of=<pathToOutImgFile>` to get a `.img` file, an exact copy of that SD card. The device name can be found using steps 4 and 5 above. The path to img file can be whatever you want.
+3. Remove the SD card and insert another SD card, the one you want to copy to.
+4. Run the command in reverse, swapping `if` and `of`, but making sure your partitions are not mounted.
