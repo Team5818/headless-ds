@@ -1,7 +1,7 @@
 # EnableKey
 Enables FRC robots on ethernet connection
 
-## OrangePi Zero Installation
+##  Installation
 1. Download [Armbian Debian Stretch](https://dl.armbian.com/orangepizero/Debian_stretch_next.7z)
 2. Unzip `.img` file
 3. Plug in microSD card
@@ -20,21 +20,29 @@ Enables FRC robots on ethernet connection
 16. SSH back into the system after reboot and run `dietpi-config`
 17. Scroll to "advanced options" then "Swapfile". Press "OK" when prompted.
 18. Select `/dev/mmcblk0p1` or equivalent and enter "0" for the swapfile value
-19. Exit all the way out of the config and run `apt-get install avahi-daemon net-tools`
+19. Exit all the way out of the config and run `apt-get install avahi-daemon net-tools libnss-mdns info install-info`. This will install the avahi hostname daemon, ifconfig, and the mdns resolver.
 20. Change the "dietpi" user to "pi" by running `usermod -l pi -d /home/pi -m dietpi`
-21. Run `apt-get update` and `apt-get upgrade`
-22. Download python file by running `curl https://githubusercontent.com/Team5818/EnableKey/master/enable_key.py --output /home/pi/enable_key.py`
-23. Download systemctl service by running `curl https://githubusercontent.com/Team5818/EnableKey/master/enable-key.service --output /lib/systemd/system/enable-key.service`
-24. Start the service by running `sudo systemctl start enable-key.service`
-25. Have the service start on bootup by running `sudo systemctl enable enable-key.service`
+21. Set the hostname to "EnableKey" by executing `sudo nano /etc/hostname` and changing the contents of the file to "EnableKey" (without the quotes).
+22. Run `apt-get update` and `apt-get upgrade`
+23. Download python file by running `curl https://githubusercontent.com/Team5818/EnableKey/master/enable_key.py --output /home/pi/enable_key.py`
+24. Download the systemctl service by running `curl https://githubusercontent.com/Team5818/EnableKey/master/enable-key.service --output /lib/systemd/system/enable-key.service`
+25. Start the service by running `sudo systemctl start enable-key.service`
+26. Have the service start on bootup/startup by running `sudo systemctl enable enable-key.service`
 
 ## Troubleshooting
+* SSH into the Pi: `ssh root@EnableKey.local` if on the same network and running an mdns resolver.
 * Restart the Pi: `sudo systemctl reboot -i`
 * Reload systemctl configuration: `sudo systemctl daemon-reload`
 * Start/Stop/Restart/View logs (service): `sudo systemctl <start|stop|restart|status> enable-key.service`
+* If the service doesn't run, try changing the "User" and "Group" in the service file to the same as the owner/user of the python script. If set up correctly, they should both be "root". If not, run `ls -la /home/pi/enable_key.py`. The two names on the left should be the same as those in the service, editable by running `nano /lib/systemd/system/enable-key.service`. Reload the systemctl configuration and restart the service to save the changes.
+* If everything looks fine but no packets are being sent, `libnss-mdns` may not have been installed. To install it without having the pi connected to the internet, download it, scp it onto the pi, and use dpkg to install it.
+  * `wget http://http.us.debian.org/debian/pool/main/n/nss-mdns/libnss-mdns_0.10-8_armhf.deb`
+  * `scp libnss-mdns_0.10-8_armhf.deb root@EnableKey.local:.`
+  * `ssh root@EnableKey.local`
+  * `dpkg -i libnss-mdns_0.10-8_armhf.deb`
 
 ## Making Copies
 1. Insert the working SD card to a linux computer
-2. Run `sudo dd bs=4M if=<deviceName> of=<pathToOutImgFile>` to get a `.img` file, an exact copy of that SD card. The device name can be found using steps 4 and 5 above. The path to img file can be whatever you want.
+2. Run `sudo dd bs=4M if=<primaryPartitionName> of=<pathToOutImgFile>` to get a `.img` file, an exact copy of the primary partition (the 900 MiB = 944MB partition, the main one). The device name can be found using steps 4 and 5 above. The path to img file can be whatever you want.
 3. Remove the SD card and insert another SD card, the one you want to copy to.
 4. Run the command in reverse, swapping `if` and `of`, but making sure your partitions are not mounted.
