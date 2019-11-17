@@ -24,8 +24,8 @@ Enables FRC robots on ethernet connection
 20. Change the "dietpi" user to "pi" by running `usermod -l pi -d /home/pi -m dietpi`
 21. Set the hostname to "EnableKey" by executing `sudo nano /etc/hostname` and changing the contents of the file to "EnableKey" (without the quotes).
 22. Run `apt-get update` and `apt-get upgrade`
-23. Download python file by running `curl https://githubusercontent.com/Team5818/EnableKey/master/enable_key.py --output /home/pi/enable_key.py`
-24. Download the systemctl service by running `curl https://githubusercontent.com/Team5818/EnableKey/master/enable-key.service --output /lib/systemd/system/enable-key.service`
+23. Download python file by running `curl https://raw.githubusercontent.com/Team5818/EnableKey/master/enable_key.py --output /home/pi/enable_key.py`
+24. Download the systemctl service by running `curl https://raw.githubusercontent.com/Team5818/EnableKey/master/enable-key.service --output /lib/systemd/system/enable-key.service`
 25. Start the service by running `sudo systemctl start enable-key.service`
 26. Have the service start on bootup/startup by running `sudo systemctl enable enable-key.service`
 
