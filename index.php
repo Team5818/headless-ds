@@ -1,6 +1,7 @@
 <?php
 // Web status page/interface
-// FQFN: /var/www/html/enable_key.php
+// FQFN: /var/www/html/index.php
+echo '<title>EnableKey Web Interface</title>';
 
 exec('df /dev/mmcblk0p1 -H', $output);
 array_push($output, "");
