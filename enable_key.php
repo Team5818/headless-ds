@@ -1,6 +1,6 @@
 <?php
-// Web status page for Armabot EnableKey
-// Located at /var/www/html/enable_key.php
+// Web status page/interface
+// FQFN: /var/www/html/enable_key.php
 
 exec('df /dev/mmcblk0p1 -H', $output);
 array_push($output, "");
@@ -22,9 +22,9 @@ echo '<a href="enable_key.php?stop"><button>Stop</button></a>';
 if(isset($_GET["restart"])) {
 	exec('sudo systemctl restart enable-key.service', $void);
 } else if(isset($_GET["start"])) {
-	exec('sudo systemctl start enable-key.service 2>&1', $void);
+	exec('sudo systemctl start enable-key.service', $void);
 } else if(isset($_GET["stop"])) {
-	exec('sudo systemctl stop enable-key.service 2>&1', $void);
+	exec('sudo systemctl stop enable-key.service', $void);
 } else {
 	exit();
 }

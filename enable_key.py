@@ -16,7 +16,6 @@ def read_addr() -> Optional[str]:
         brd = address_set['broadcast']  # type: str
         if not brd.startswith('10.'):
             continue
-        # Extract center two components of IP address
         high, low = brd.split('.')[1:3]
         if high == '0':
             team_number = low
