@@ -1,4 +1,4 @@
-Filename    Path    Description
+Filename		Path		Description
 dietpi-banner		/DietPi/dietpi/func/	ssh login splashscreen
 enable-key.service	/lib/systemd/system/	systemctl service config
 enable_key.php		/var/www/html/		apache web page/interface	
