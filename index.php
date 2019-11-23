@@ -1,6 +1,7 @@
 <?php
 // Web status page/interface
-// FQFN: /var/www/html/enable_key.php
+// FQFN: /var/www/html/index.php
+echo '<title>EnableKey Web Interface</title>';
 
 exec('df /dev/mmcblk0p1 -H', $output);
 array_push($output, "");
@@ -15,9 +16,9 @@ for($i = 0;$i < sizeof($output);$i++) {
 }
 echo '</pre>';
 
-echo '<a href="enable_key.php?restart"><button>Restart</button></a> ';
-echo '<a href="enable_key.php?start"><button>Start</button></a> ';
-echo '<a href="enable_key.php?stop"><button>Stop</button></a>';
+echo '<a href="index.php?restart"><button>Restart</button></a> ';
+echo '<a href="index.php?start"><button>Start</button></a> ';
+echo '<a href="index.php?stop"><button>Stop</button></a>';
 
 if(isset($_GET["restart"])) {
 	exec('sudo systemctl restart enable-key.service', $void);
@@ -29,5 +30,5 @@ if(isset($_GET["restart"])) {
 	exit();
 }
 
-header("refresh:0.5;url=enable_key.php");
+header("refresh:0.5;url=index.php");
 ?>

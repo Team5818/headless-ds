@@ -34,12 +34,12 @@ Enables FRC robots on ethernet connection
 28. Run `apt-get update` and `apt-get upgrade`
 29. Download python file by running `curl https://raw.githubusercontent.com/Team5818/EnableKey/master/enable_key.py --output /home/pi/enable_key.py`
 30. Download the systemctl service by running `curl https://raw.githubusercontent.com/Team5818/EnableKey/master/enable-key.service --output /lib/systemd/system/enable-key.service`
-31. Download the php page by running `curl https://raw.githubusercontent.com/Team5818/EnableKey/master/enable_key.php --output /var/www/html/enable_key.php`
+31. Download the php page by running `curl https://raw.githubusercontent.com/Team5818/EnableKey/master/index.php --output /var/www/html/index.php`
 32. Start the service by running `sudo systemctl start enable-key.service`
 33. Have the service start on bootup/startup by running `sudo systemctl enable enable-key.service`
 
 ## Troubleshooting
-* Use the web interface at `enablekey.local/enable_key.php`
+* Use the web interface at `enablekey.local`
 * SSH into the Pi: `ssh root@EnableKey.local` if on the same network and running an mdns resolver.
 * Restart the Pi: `sudo systemctl reboot -i`
 * Reload systemctl configuration: `sudo systemctl daemon-reload`
