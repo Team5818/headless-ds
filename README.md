@@ -1,4 +1,4 @@
-# EnableKey
+# Headless Driver Station
 Enables FRC robots on ethernet connection
 
 ##  Installation
@@ -30,25 +30,25 @@ Enables FRC robots on ethernet connection
   * `LoadModule dnssd_module /usr/lib/apache2/modules/mod_dnssd.so`
   * `DNSSDEnable on`
 26. Remove the default apache file: `rm /var/www/html/index.html`
-27. Set the hostname to "EnableKey" by executing `sudo nano /etc/hostname` and changing the contents of the file to "EnableKey" (without the quotes).
+27. Set the hostname to "headless-ds" by executing `sudo nano /etc/hostname` and changing the contents of the file to "headless-ds" (without the quotes).
 28. Run `apt-get update` and `apt-get upgrade`
-29. Download python file by running `curl https://raw.githubusercontent.com/Team5818/EnableKey/master/enable_key.py --output /home/pi/enable_key.py`
-30. Download the systemctl service by running `curl https://raw.githubusercontent.com/Team5818/EnableKey/master/enable-key.service --output /lib/systemd/system/enable-key.service`
-31. Download the php page by running `curl https://raw.githubusercontent.com/Team5818/EnableKey/master/index.php --output /var/www/html/index.php`
-32. Start the service by running `sudo systemctl start enable-key.service`
-33. Have the service start on bootup/startup by running `sudo systemctl enable enable-key.service`
+29. Download python file by running `curl https://raw.githubusercontent.com/Team5818/headless-ds/master/headless-ds.py --output /home/pi/headless-ds.py`
+30. Download the systemctl service by running `curl https://raw.githubusercontent.com/Team5818/headless-ds/master/headless-ds.service --output /lib/systemd/system/headless-ds.service`
+31. Download the php page by running `curl https://raw.githubusercontent.com/Team5818/headless-ds/master/index.php --output /var/www/html/index.php`
+32. Start the service by running `sudo systemctl start headless-ds.service`
+33. Have the service start on bootup/startup by running `sudo systemctl enable headless-ds.service`
 
 ## Troubleshooting
-* Use the web interface at `enablekey.local`
-* SSH into the Pi: `ssh root@EnableKey.local` if on the same network and running an mdns resolver.
+* Use the web interface at `http://headless-ds.local`
+* SSH into the Pi: `ssh root@headless-ds.local` if on the same network and running an mdns resolver.
 * Restart the Pi: `sudo systemctl reboot -i`
 * Reload systemctl configuration: `sudo systemctl daemon-reload`
-* Start/Stop/Restart/View logs (service): `sudo systemctl <start|stop|restart|status> enable-key.service`
-* If the service doesn't run, try changing the "User" and "Group" in the service file to the same as the owner/user of the python script. If set up correctly, they should both be "root". If not, run `ls -la /home/pi/enable_key.py`. The two names on the left should be the same as those in the service, editable by running `nano /lib/systemd/system/enable-key.service`. Reload the systemctl configuration and restart the service to save the changes.
-* If everything looks fine but no packets are being sent, `libnss-mdns` may not have been installed. To install it without having the pi connected to the internet, download it, scp it onto the pi, and use dpkg to install it.
+* Start/Stop/Restart/View logs (service): `sudo systemctl <start|stop|restart|status> headless-ds.service`
+* If the service doesn't run, try changing the "User" and "Group" in the service file to the same as the owner/user of the python script. If set up correctly, they should both be "root". If not, run `ls -la /home/pi/headless-ds.py`. The two names on the left should be the same as those in the service, editable by running `nano /lib/systemd/system/headless-ds.service`. Reload the systemctl configuration and restart the service to save the changes.
+* If everything looks fine but no packets are being sent, `libnss-mdns` may not have been installed. To install it without having the pi connected to the internet, download it, scp it onto the pi, and use dpkg to install it. For other packages, the architecture is `armhf`, and Armbian is Debian-based, so any Debian packages built for armhf should work.
   * `wget http://http.us.debian.org/debian/pool/main/n/nss-mdns/libnss-mdns_0.10-8_armhf.deb`
-  * `scp libnss-mdns_0.10-8_armhf.deb root@EnableKey.local:.`
-  * `ssh root@EnableKey.local`
+  * `scp libnss-mdns_0.10-8_armhf.deb root@headless-ds.local:.`
+  * `ssh root@headless-ds.local`
   * `dpkg -i libnss-mdns_0.10-8_armhf.deb`
 
 ## Making Copies
