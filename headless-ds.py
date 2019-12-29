@@ -16,6 +16,7 @@ def read_addr() -> Optional[str]:
         brd = address_set['broadcast']  # type: str
         if not brd.startswith('10.'):
             continue
+        # Extract center two components of IP address
         high, low = brd.split('.')[1:3]
         if high == '0':
             team_number = low
@@ -51,7 +52,7 @@ def main():
         header = bytearray((0x00, 0x00, 0x01, 0x04, 0x10, 0x03))
         addr = (address, 1110)
         sock = socket.socket(type=socket.SOCK_DGRAM)
-        current_time = 0  # time.time_ns() // 1000
+        current_time = 0
         current_dtime = datetime.datetime.utcnow()
         msg = struct.pack('>i' + 'B' * 8, current_time,
                           current_dtime.second, current_dtime.minute, current_dtime.hour,

@@ -7,7 +7,7 @@ Wants=network-online.target
 Type=simple
 User=root
 Group=root
-ExecStart=/usr/bin/python3 /home/pi/enable_key.py
+ExecStart=/usr/bin/python3 /home/pi/headless-ds.py
 Restart=on-failure
 
 [Install]
