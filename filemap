@@ -2,4 +2,5 @@ Filename		Path			Description
 dietpi-banner		/DietPi/dietpi/func/	ssh login splashscreen
 headless-ds.service	/lib/systemd/system/	systemctl service config
 index.php		/var/www/html/		apache web page/interface	
-headless-ds.py		/home/pi/		packet sending script
+headless-ds.py		/home/frcuser/		packet sending script
+team.py			/home/frcuser/		team number utility

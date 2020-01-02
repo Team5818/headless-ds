@@ -2,7 +2,7 @@
 
 clear
 echo -e ICAgIF9fXyAgICAgICAgICAgICAgICAgICAgICAgICBfXyAgICAgICAgICBfXyANCiAgIC8gICB8ICBfX19fX19fX18gX19fICBfX19fIF8vIC9fICBfX19fICAvIC9fDQogIC8gL3wgfCAvIF9fXy8gX18gYF9fIFwvIF9fIGAvIF9fIFwvIF9fIFwvIF9fLw0KIC8gX19fIHwvIC8gIC8gLyAvIC8gLyAvIC9fLyAvIC9fLyAvIC9fLyAvIC9fICANCi9fLyAgfF8vXy8gIC9fLyAvXy8gL18vXF9fLF8vXy5fX18vXF9fX18vXF9fLyAgDQo= | base64 -d
-echo -n -e "$(hostname) | $(date "+%-m/%-d/%-y %l:%M:%S %p") | IP: $(ifconfig eth0 | grep -w 'inet' | tr -s ' ' | cut -d ' ' -f3) | "
+echo -n -e "FRC Team $(team) | $(date "+%-m/%-d/%-y %l:%M:%S %p") | IP: $(ifconfig eth0 | grep -w 'inet' | tr -s ' ' | cut -d ' ' -f3) | "
 if systemctl status headless-ds.service | grep -q 'active (running)'; then
 	echo -n -e '\033[0;32mService running\033[0;0m\n';
 else

@@ -5,7 +5,7 @@
 echo '<title>Headless DriverStation Web Interface</title>';
 
 $svc_name = "headless-ds";
-echo '<b><pre>Headless DriverStation Web Interface</pre></b>';
+echo '<b><pre>Headless DriverStation Web Interface | FRC Team ' . exec(team) . '</pre></b>';
 
 exec('df /dev/mmcblk0p1 -H', $output);
 array_push($output, "");

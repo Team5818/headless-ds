@@ -10,7 +10,7 @@ Enables FRC robots on ethernet connection
 6. Mount `.img` to SD using `sudo dd bs=4M if=<filepathToArmbianImg> of=<deviceName> conv=fsync status=progress`
 7. Connect OrangePi to ethernet and put in SD card w/ power
 8. SSH into OrangePi (default user = root, pw = 1234) or use the serial monitor (USB)
-9. Set up new user as "pi" with default pw
+9. Set up new user as "frcuser" with pw "admin"
 10. Install DietPi over the Armbian install using [these](https://github.com/MichaIng/DietPi/issues/1285#issue-280771944) instructions. Restart as necessary.
 11. SSH into the OrangePi again (default user = root, pw = dietpi)
 12. Set the new unix password to the default pw and continue installer until config screen comes up.
@@ -23,7 +23,7 @@ Enables FRC robots on ethernet connection
 19. Go back out to "Network Options: Misc" and press "Boot Net Wait". Select "0: Disabled" and press OK
 20. Back out again and select "Network Options: Adapters" and turn off the WiFi adapter option.
 21. Exit all the way out of the config and run `apt-get install avahi-daemon net-tools libnss-mdns info install-info tshark apache2 php policykit-1 libapache2-mod-dnssd`. This will install the avahi hostname daemon, ifconfig, mdns resolver, http server, and packet analyzer.
-22. Change the "dietpi" user to "pi" by running `usermod -l pi -d /home/pi -m dietpi`
+22. Change the "dietpi" user to "frcuser" by running `usermod -l frcuser -d /home/frcuser -m dietpi`
 23. Enable the http server on startup by running `systemctl enable apache2.service`
 24. Enable the avahi mdns resolver by executing `systemctl enable avahi-daemon.service`
 25. Give root permissions to "www-data" so the http server can execute systemctl commands: `sudo visudo` and add this to the bottom: `www-data ALL = NOPASSWD: /bin/systemctl`
@@ -36,12 +36,15 @@ Enables FRC robots on ethernet connection
 30. Download python file by running `curl https://raw.githubusercontent.com/Team5818/headless-ds/master/headless-ds.py --output /home/pi/headless-ds.py`
 31. Download the systemctl service by running `curl https://raw.githubusercontent.com/Team5818/headless-ds/master/headless-ds.service --output /lib/systemd/system/headless-ds.service`
 32. Download the php page by running `curl https://raw.githubusercontent.com/Team5818/headless-ds/master/index.php --output /var/www/html/index.php`
-33. Start the service by running `sudo systemctl start headless-ds.service`
-34. Have the service start on bootup/startup by running `sudo systemctl enable headless-ds.service`
+33. Download the team number utility by running `curl https://raw.githubusercontent.com/Team5818/headless-ds/master/team.py --output /home/frcuser/team.py`
+34. Create a symlink between the utility and `/usr/bin/` so it can be executed anywhere through `sudo ln -s /home/frcuser/team.py /usr/bin/team`
+35. Create a symlink for ifconfig to run through frcuser by executing `sudo ln -s /sbin/ifconfig /usr/bin/ifconfig`
+36. Start the service by running `sudo systemctl start headless-ds.service`
+37. Have the service start on bootup/startup by running `sudo systemctl enable headless-ds.service`
 
 ## Troubleshooting
 * Use the web interface at `http://headless-ds.local`
-* SSH into the Pi: `ssh root@headless-ds.local` if on the same network and running an mdns resolver.
+* SSH into the Pi: `ssh frcuser@headless-ds.local` if on the same network and running an mdns resolver.
 * Restart the Pi: `sudo systemctl reboot -i`
 * Reload systemctl configuration: `sudo systemctl daemon-reload`
 * Start/Stop/Restart/View logs (service): `sudo systemctl <start|stop|restart|status> headless-ds.service`
