@@ -4,3 +4,4 @@ headless-ds.service	/lib/systemd/system/	systemctl service config
 index.php		/var/www/html/		apache web page/interface	
 headless-ds.py		/home/frcuser/		packet sending script
 team.py			/home/frcuser/		team number utility
+install.sh		[clone dir]		auto install script
