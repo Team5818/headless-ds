@@ -39,6 +39,7 @@ ln -s "$(pwd)"/headless-ds.service /lib/systemd/system/headless-ds.service
 ln -s "$(pwd)"/team.py /usr/bin/team
 ln -s "$(pwd)"/index.php /var/www/html/index.php
 ln -s "$(pwd)"/README.md /var/www/html/README.md
+ln -s "$(pwd)"/ab-logo.png /var/www/html/ab-logo.png
 ln -s "$(pwd)"/dietpi-banner /DietPi/dietpi/func/dietpi-banner
 ln -s /sbin/ifconfig /usr/bin/ifconfig
 

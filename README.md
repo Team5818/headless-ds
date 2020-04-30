@@ -35,12 +35,14 @@ Enables FRC robots on ethernet connection
 28. Run `apt-get update` and `apt-get upgrade`
 29. Ensure that the current directory is `/home/frcuser/` (if not change it to that using `cd /home/frcuser/`). Clone the headless-ds Git repository using `git clone https://github.com/Team5818/headless-ds.git`.
 30. Remove existing files and create symlinks in their place. Run `rm <dest>` then `sudo ln -s <src> <dest>` for each of the following pairs of `<src>` `<dest>`:
+
   | Source `<src>` | Destination `<dest>` | Description |
   |----------------|----------------------|-------------|
   |`/home/frcuser/headless-ds/headless-ds.service` | `/lib/systemd/system/headless-ds.service` | systemctl service config |
   |`/home/frcuser/headless-ds/team.py` | `/usr/bin/team` | team number utility |
   |`/home/frcuser/headless-ds/index.php` | `/var/www/html/index.php` | web config page |
   |`/home/frcuser/headless-ds/README.md` | `/var/www/html/README.md` | README via web config |
+  |`/home/frcuser/headless-ds/ab-logo.png` | `/var/www/html/ab-logo.png` | Armabot logo via web config |
   |`/home/frcuser/headless-ds/dietpi-banner` | `/DietPi/dietpi/func/dietpi-banner` | ssh login banner |
   |`/sbin/ifconfig` | `/usr/bin/ifconfig` | ifconfig through frcuser |
 31. Ensure that the Apache web server can access the symlinked files by changing the owner to `www-data`. Execute the following:
@@ -74,4 +76,4 @@ The included `install.sh` script will perform steps 22-33 if placed in the corre
 4. Run `sudo dd bs=512 if=<sdDeviceName> of=<pathToOutImgFile> status=progress count=<last sector of primary partition + 1>` to get a `.img` file, an exact copy of the leading space and primary partition with offset (the 910 MiB = 954MB partition, the main one). We want to copy the partition and the space in front of it, giving the device as much space as possible. Note that the img file is not mountable because it encompasses an offset partition. The device name can be found using steps 4 and 5 above. The path to img file can be whatever you want.
 5. Remove the SD card and insert another SD card, the one you want to copy to.
 6. Run the command in reverse, swapping `if` and `of`, but making sure your partitions are not mounted.
-  * To unmount a partition, run `umount /dev/mmcblk0pX' as root
+  * To unmount a partition, run `umount /dev/mmcblk0pX` as root

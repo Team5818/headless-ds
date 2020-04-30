@@ -27,10 +27,8 @@ echo 'Service: ';
 echo '<a href="index.php?restart"><button>Restart</button></a> ';
 echo '<a href="index.php?start"><button>Start</button></a> ';
 echo '<a href="index.php?stop"><button>Stop</button></a>';
-echo '<br /><br />Update: ';
-echo '<a href="index.php?onlineUpdate"><button>Online</button></a> ';
-echo '<a href="index.php?offlineUpdate"><button>Offline</button></a>';
-echo '<br /><br />Info: ';
+echo '<br /><br />Other: ';
+echo '<a href="index.php?update"><button>Update Device</button></a> ';
 echo '<a href="README.md"><button>README</button></a>';
 
 if(isset($_GET["restart"])) {
@@ -39,9 +37,8 @@ if(isset($_GET["restart"])) {
 	exec('sudo systemctl start ' . $svc_name . '.service', $void);
 } else if(isset($_GET["stop"])) {
 	exec('sudo systemctl stop ' . $svc_name . '.service', $void);
-} else if(isset($_GET["onlineUpdate"])) {
+} else if(isset($_GET["update"])) {
 	exec('sh -c "cd /home/frcuser/headless-ds/ && git reset --hard HEAD && git pull && sudo systemctl daemon-reload"', $void);
-} else if(isset($_GET["offlineUpdate"])) {
 } else {
 	exit();
 }
