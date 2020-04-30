@@ -3,6 +3,7 @@
 // FQFN: /var/www/html/index.php
 
 echo '<title>Headless DriverStation Web Interface</title>';
+echo '<link rel=icon href=ab-logo.png>';
 
 $svc_name = "headless-ds";
 echo '<b><pre>Headless DriverStation Web Interface | FRC Team ' . exec(team) . '</pre></b>';
@@ -22,9 +23,15 @@ for($i = 0;$i < sizeof($output);$i++) {
 }
 echo '</pre>';
 
+echo 'Service: ';
 echo '<a href="index.php?restart"><button>Restart</button></a> ';
 echo '<a href="index.php?start"><button>Start</button></a> ';
 echo '<a href="index.php?stop"><button>Stop</button></a>';
+echo '<br /><br />Update: ';
+echo '<a href="index.php?onlineUpdate"><button>Online</button></a> ';
+echo '<a href="index.php?offlineUpdate"><button>Offline</button></a>';
+echo '<br /><br />Info: ';
+echo '<a href="README.md"><button>README</button></a>';
 
 if(isset($_GET["restart"])) {
 	exec('sudo systemctl restart ' . $svc_name . '.service', $void);
@@ -32,6 +39,9 @@ if(isset($_GET["restart"])) {
 	exec('sudo systemctl start ' . $svc_name . '.service', $void);
 } else if(isset($_GET["stop"])) {
 	exec('sudo systemctl stop ' . $svc_name . '.service', $void);
+} else if(isset($_GET["onlineUpdate"])) {
+	exec('sh -c "cd /home/frcuser/headless-ds/ && git reset --hard HEAD && git pull && sudo systemctl daemon-reload"', $void);
+} else if(isset($_GET["offlineUpdate"])) {
 } else {
 	exit();
 }

@@ -2,6 +2,7 @@
 Enables FRC robots on ethernet connection
 
 ##  Installation
+### Instructions
 1. Download [Armbian Debian Stretch](https://dl.armbian.com/orangepizero/Debian_stretch_next.7z)
 2. Unzip `.img` file
 3. Plug in microSD card
@@ -22,25 +23,34 @@ Enables FRC robots on ethernet connection
 18. Select `/dev/mmcblk0p1` or equivalent and enter "0" for the swapfile value
 19. Go back out to "Network Options: Misc" and press "Boot Net Wait". Select "0: Disabled" and press OK
 20. Back out again and select "Network Options: Adapters" and turn off the WiFi adapter option.
-21. Exit all the way out of the config and run `apt-get install avahi-daemon net-tools libnss-mdns info install-info tshark apache2 php policykit-1 libapache2-mod-dnssd`. This will install the avahi hostname daemon, ifconfig, mdns resolver, http server, and packet analyzer.
-22. Change the "dietpi" user to "frcuser" by running `usermod -l frcuser -d /home/frcuser -m dietpi`
+21. Change the "dietpi" user to "frcuser" by running `usermod -l frcuser -d /home/frcuser -m dietpi`
+22. Exit all the way out of the config and run `apt-get install avahi-daemon net-tools libnss-mdns info install-info tshark apache2 php policykit-1 libapache2-mod-dnssd`. This will install the avahi hostname daemon, ifconfig, mdns resolver, http server, and packet analyzer.
 23. Enable the http server on startup by running `systemctl enable apache2.service`
 24. Enable the avahi mdns resolver by executing `systemctl enable avahi-daemon.service`
-25. Give root permissions to "www-data" so the http server can execute systemctl commands: `sudo visudo` and add this to the bottom: `www-data ALL = NOPASSWD: /bin/systemctl`
+25. Give root permissions to "www-data" so the http server can execute systemctl commands: `sudo visudo` and add this to the bottom: `www-data ALL = NOPASSWD: /bin/systemctl` as well as `www-data ALL = (ALL:ALL) ALL`.
 26. Edit the apache2 config file through nano using `nano /etc/apache2/apache2.conf` and add these two lines:
   * `LoadModule dnssd_module /usr/lib/apache2/modules/mod_dnssd.so`
   * `DNSSDEnable on`
-27. Remove the default apache file: `rm /var/www/html/index.html`
-28. Set the hostname to "headless-ds" by executing `sudo nano /etc/hostname` and changing the contents of the file to "headless-ds" (without the quotes).
-29. Run `apt-get update` and `apt-get upgrade`
-30. Download python file by running `curl https://raw.githubusercontent.com/Team5818/headless-ds/master/headless-ds.py --output /home/frcuser/headless-ds.py`
-31. Download the systemctl service by running `curl https://raw.githubusercontent.com/Team5818/headless-ds/master/headless-ds.service --output /lib/systemd/system/headless-ds.service`
-32. Download the php page by running `curl https://raw.githubusercontent.com/Team5818/headless-ds/master/index.php --output /var/www/html/index.php`
-33. Download the team number utility by running `curl https://raw.githubusercontent.com/Team5818/headless-ds/master/team.py --output /home/frcuser/team.py`
-34. Create a symlink between the utility and `/usr/bin/` so it can be executed anywhere through `sudo ln -s /home/frcuser/team.py /usr/bin/team`
-35. Create a symlink for ifconfig to run through frcuser by executing `sudo ln -s /sbin/ifconfig /usr/bin/ifconfig`
-36. Start the service by running `sudo systemctl start headless-ds.service`
-37. Have the service start on bootup/startup by running `sudo systemctl enable headless-ds.service`
+27. Set the hostname to "headless-ds" by executing `sudo nano /etc/hostname` and changing the contents of the file to "headless-ds" (without the quotes).
+28. Run `apt-get update` and `apt-get upgrade`
+29. Ensure that the current directory is `/home/frcuser/` (if not change it to that using `cd /home/frcuser/`). Clone the headless-ds Git repository using `git clone https://github.com/Team5818/headless-ds.git`.
+30. Remove existing files and create symlinks in their place. Run `rm <dest>` then `sudo ln -s <src> <dest>` for each of the following pairs of `<src>` `<dest>`:
+  | Source `<src>` | Destination `<dest>` | Description |
+  |----------------|----------------------|-------------|
+  |`/home/frcuser/headless-ds/headless-ds.service` | `/lib/systemd/system/headless-ds.service` | systemctl service config |
+  |`/home/frcuser/headless-ds/team.py` | `/usr/bin/team` | team number utility |
+  |`/home/frcuser/headless-ds/index.php` | `/var/www/html/index.php` | web config page |
+  |`/home/frcuser/headless-ds/README.md` | `/var/www/html/README.md` | README via web config |
+  |`/home/frcuser/headless-ds/dietpi-banner` | `/DietPi/dietpi/func/dietpi-banner` | ssh login banner |
+  |`/sbin/ifconfig` | `/usr/bin/ifconfig` | ifconfig through frcuser |
+31. Ensure that the Apache web server can access the symlinked files by changing the owner to `www-data`. Execute the following:
+  * `chown -R www-data /home/frcuser/headless-ds/`
+  * `chmod -R g+s /home/frcuser/headless-ds/`
+32. Start the service by running `sudo systemctl start headless-ds.service`
+33. Have the service start on bootup/startup by running `sudo systemctl enable headless-ds.service`
+
+### Install Script
+The included `install.sh` script will perform steps 22-33 if placed in the correct `/home/frcuser/headless-ds` folder. The Git repository should be present in its entirety before this time. Run as `sudo`.
 
 ## Troubleshooting
 * Use the web interface at `http://headless-ds.local`
@@ -59,7 +69,7 @@ Enables FRC robots on ethernet connection
 
 ## Making Copies
 1. Insert the working SD card to a linux computer
-2. (Optional) If the primary partition is larger than the SD card you want to copy to and has space left over, it should be resized before copying. To do this, use `gparted` on a GUI-based Linux distro with the partition in question unmounted. The same can be done from the command line using a combination of `resize2fs`, `e2fsck`, and `lvresize`. 
+2. (Optional) If the primary partition is larger than the SD card you want to copy to and has space left over, it should be resized before copying. To do this, use `gparted` on a GUI-based Linux distro with the partition in question unmounted. The same can be done from the command line using a combination of `resize2fs`, `e2fsck`, and `lvresize`.
 3. Find the end sector of the partition desired to copy. To do this, run `fdisk -l`. Look for the partition you want, and record the number under "End". That number plus one is the number to be entered as the count parameter in the following `dd` command.
 4. Run `sudo dd bs=512 if=<sdDeviceName> of=<pathToOutImgFile> status=progress count=<last sector of primary partition + 1>` to get a `.img` file, an exact copy of the leading space and primary partition with offset (the 910 MiB = 954MB partition, the main one). We want to copy the partition and the space in front of it, giving the device as much space as possible. Note that the img file is not mountable because it encompasses an offset partition. The device name can be found using steps 4 and 5 above. The path to img file can be whatever you want.
 5. Remove the SD card and insert another SD card, the one you want to copy to.

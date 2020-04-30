@@ -1,5 +1,5 @@
 [Unit]
-Description=FRC Enable Key Program
+Description=FRC Headless DriverStation Program
 After=network-online.target
 Wants=network-online.target
 
@@ -7,7 +7,7 @@ Wants=network-online.target
 Type=simple
 User=root
 Group=root
-ExecStart=/usr/bin/python3 /home/frcuser/headless-ds.py
+ExecStart=/usr/bin/python3 /home/frcuser/headless-ds/headless-ds.py
 Restart=on-failure
 
 [Install]

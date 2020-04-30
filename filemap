@@ -1,7 +1,9 @@
-Filename		Path			Description
-dietpi-banner		/DietPi/dietpi/func/	ssh login splashscreen
-headless-ds.service	/lib/systemd/system/	systemctl service config
-index.php		/var/www/html/		apache web page/interface	
-headless-ds.py		/home/frcuser/		packet sending script
-team.py			/home/frcuser/		team number utility
-install.sh		[clone dir]		auto install script
+Filename              Path                          Description
+dietpi-banner         /DietPi/dietpi/func/          SSH login splashscreen
+headless-ds.service   /lib/systemd/system/          systemctl service config
+index.php             /var/www/html/		            Apache web page/interface
+headless-ds.py        /home/frcuser/headless-ds/		Packet sending script
+team.py               /home/frcuser/headless-ds/    Team number utility
+install.sh            /home/frcuser/headless-ds/    Auto install script
+ab-logo.png           /home/frcuser/headless-ds/    Armabot logo
+README.md             /home/frcuser/headless-ds/    Readme guide
