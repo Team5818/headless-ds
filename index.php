@@ -6,7 +6,8 @@ echo '<title>Headless DriverStation Web Interface</title>';
 echo '<link rel=icon href=ab-logo.png>';
 
 $svc_name = "headless-ds";
-echo '<b><pre>Headless DriverStation Web Interface | FRC Team ' . exec(team) . '</pre></b>';
+exec("cd /home/frcuser/headless-ds/ && git describe --tags --abbrev=0", $ver);
+echo '<b><pre>Headless DriverStation Web Interface | Version ' . $ver[0] . ' | FRC Team ' . exec(team) . '</pre></b>';
 
 exec('df /dev/mmcblk0p1 -H', $output);
 array_push($output, "");
@@ -16,6 +17,7 @@ exec('ifconfig eth0', $output);
 exec('systemctl status ' . $svc_name . '.service', $output);
 array_push($output, "");
 exec('systemctl status avahi-daemon.service | grep ".local"', $output);
+
 
 echo '<pre>';
 for($i = 0;$i < sizeof($output);$i++) {
@@ -38,7 +40,8 @@ if(isset($_GET["restart"])) {
 } else if(isset($_GET["stop"])) {
 	exec('sudo systemctl stop ' . $svc_name . '.service', $void);
 } else if(isset($_GET["update"])) {
-	exec('sh -c "cd /home/frcuser/headless-ds/ && git fetch --tags && git reset --hard `git describe --tags --abbrev=0` && git pull && sudo systemctl daemon-reload"', $void);
+	exec('cd /home/frcuser/headless-ds/ && git fetch --tags && git describe --tags --abbrev=0', $latestTag);
+	exec('sh -c "cd /home/frcuser/headless-ds/ && git reset --hard ' . $latestTag[0] . ' && git pull && sudo systemctl daemon-reload"', $void);
 } else {
 	exit();
 }
