@@ -54,6 +54,9 @@ Enables FRC robots on ethernet connection
 ### Install Script
 The included `install.sh` script will perform steps 22-33 if placed in the correct `/home/frcuser/headless-ds` folder. The Git repository should be present in its entirety before this time. Run as `sudo`.
 
+## Updates
+The "Update Device" button on the web dashboard will update the headless-ds with any new software published. The latest version will automatically be downloaded and applied. This requires an internet connection.
+
 ## Troubleshooting
 * Use the web interface at `http://headless-ds.local`
 * SSH into the Pi: `ssh frcuser@headless-ds.local` if on the same network and running an mdns resolver.
