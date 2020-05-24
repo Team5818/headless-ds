@@ -38,7 +38,7 @@ if(isset($_GET["restart"])) {
 } else if(isset($_GET["stop"])) {
 	exec('sudo systemctl stop ' . $svc_name . '.service', $void);
 } else if(isset($_GET["update"])) {
-	exec('sh -c "cd /home/frcuser/headless-ds/ && git reset --hard HEAD && git pull && sudo systemctl daemon-reload"', $void);
+	exec('sh -c "cd /home/frcuser/headless-ds/ && git fetch --tags && git reset --hard `git describe --tags --abbrev=0` && git pull && sudo systemctl daemon-reload"', $void);
 } else {
 	exit();
 }

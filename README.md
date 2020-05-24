@@ -27,7 +27,7 @@ Enables FRC robots on ethernet connection
 22. Exit all the way out of the config and run `apt-get install avahi-daemon net-tools libnss-mdns info install-info tshark apache2 php policykit-1 libapache2-mod-dnssd`. This will install the avahi hostname daemon, ifconfig, mdns resolver, http server, and packet analyzer.
 23. Enable the http server on startup by running `systemctl enable apache2.service`
 24. Enable the avahi mdns resolver by executing `systemctl enable avahi-daemon.service`
-25. Give root permissions to "www-data" so the http server can execute systemctl commands: `sudo visudo` and add this to the bottom: `www-data ALL = NOPASSWD: /bin/systemctl` as well as `www-data ALL = (ALL:ALL) ALL`.
+25. Give root permissions to "www-data" so the http server can execute systemctl commands: `sudo visudo` or `sudo nano /etc/sudoers` and add this to the bottom: `www-data ALL = NOPASSWD: /bin/systemctl`
 26. Edit the apache2 config file through nano using `nano /etc/apache2/apache2.conf` and add these two lines:
   * `LoadModule dnssd_module /usr/lib/apache2/modules/mod_dnssd.so`
   * `DNSSDEnable on`

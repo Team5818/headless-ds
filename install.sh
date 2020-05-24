@@ -13,15 +13,12 @@ fi
 apt-get update
 apt-get install -y avahi-daemon net-tools libnss-mdns info install-info tshark apache2 php policykit-1 libapache2-mod-dnssd
 
-usermod -l frcuser -d /home/frcuser -m dietpi
-
 systemctl enable apache2.service
 systemctl start apache2.service
 systemctl enable avahi-daemon.service
 systemctl start avahi-daemon.service
 
 echo "www-data ALL = NOPASSWD: /bin/systemctl" >> /etc/sudoers
-echo "www-data ALL = (ALL:ALL) ALL" >> /etc/sudoers
 
 echo "LoadModule dnssd_module /usr/lib/apache2/modules/mod_dnssd.so" >> /etc/apache2/apache2.conf
 echo "DNSSDEnable on" >> /etc/apache2/apache2.conf
