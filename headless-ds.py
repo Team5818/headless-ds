@@ -49,7 +49,7 @@ def main():
         if not try_conn(tcp_addr):
             continue
         print("Connected to", tcp_addr)
-        header = bytearray((0x00, 0x00, 0x01, 0x04, 0x10, 0x03))
+        header = bytearray((0x00, 0x00, 0x01, 0x00, 0x10, 0x03))
         addr = (address, 1110)
         sock = socket.socket(type=socket.SOCK_DGRAM)
         current_time = 0
@@ -63,6 +63,8 @@ def main():
                 print("Disconnected from", tcp_addr)
                 break
             header[0:2] = struct.pack('>H', i)
+            if i > 20:
+                header[3] = 0x04;
             sock.sendto(header, addr)
             time.sleep(0.02)
 
