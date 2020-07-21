@@ -31,7 +31,6 @@ echo '<a href="index.php?start"><button>Start</button></a> ';
 echo '<a href="index.php?stop"><button>Stop</button></a>';
 echo '<br /><br />Other: ';
 echo '<a href="index.php?update"><button>Update Device</button></a> ';
-echo '<a href="README.md"><button>README</button></a>';
 
 if(isset($_GET["restart"])) {
 	exec('sudo systemctl restart ' . $svc_name . '.service', $void);

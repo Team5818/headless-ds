@@ -41,7 +41,6 @@ Enables FRC robots on ethernet connection
   |`/home/frcuser/headless-ds/headless-ds.service` | `/lib/systemd/system/headless-ds.service` | systemctl service config |
   |`/home/frcuser/headless-ds/team.py` | `/usr/bin/team` | team number utility |
   |`/home/frcuser/headless-ds/index.php` | `/var/www/html/index.php` | web config page |
-  |`/home/frcuser/headless-ds/README.md` | `/var/www/html/README.md` | README via web config |
   |`/home/frcuser/headless-ds/ab-logo.png` | `/var/www/html/ab-logo.png` | Armabot logo via web config |
   |`/home/frcuser/headless-ds/dietpi-banner` | `/DietPi/dietpi/func/dietpi-banner` | ssh login banner |
   |`/sbin/ifconfig` | `/usr/bin/ifconfig` | ifconfig through frcuser |
