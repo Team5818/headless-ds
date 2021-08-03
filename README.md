@@ -1,5 +1,7 @@
 # Headless Driver Station
-Enables FRC robots on ethernet connection
+Enables FRC robots on ethernet connection. 
+
+[Now an affordable high quality Armabot product!](https://www.armabot.com/collections/frontpage/products/Headless-ds)
 
 ##  Installation
 ### Instructions
